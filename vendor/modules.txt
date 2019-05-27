@@ -1,0 +1,20 @@
+# github.com/gdamore/encoding v0.0.0-20151215212835-b23993cbb635
+github.com/gdamore/encoding
+# github.com/gdamore/tcell v0.0.0-20171217235228-996a3f0a689a
+github.com/gdamore/tcell
+github.com/gdamore/tcell/encoding
+github.com/gdamore/tcell/terminfo
+# github.com/lucasb-eyer/go-colorful v0.0.0-20170903184257-231272389856
+github.com/lucasb-eyer/go-colorful
+# github.com/mattn/go-runewidth v0.0.0-20170510074858-97311d9f7767
+github.com/mattn/go-runewidth
+# golang.org/x/text v0.3.0
+golang.org/x/text/encoding
+golang.org/x/text/transform
+golang.org/x/text/encoding/charmap
+golang.org/x/text/encoding/japanese
+golang.org/x/text/encoding/korean
+golang.org/x/text/encoding/simplifiedchinese
+golang.org/x/text/encoding/traditionalchinese
+golang.org/x/text/encoding/internal/identifier
+golang.org/x/text/encoding/internal
