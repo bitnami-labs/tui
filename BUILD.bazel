@@ -1,0 +1,26 @@
+# gazelle:prefix go.nami.run/artifacts-api
+# gazelle:proto disable_global
+
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+gazelle(
+    name = "gazelle",
+    external = "vendored",
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "commands.go",
+        "print.go",
+        "progressbar.go",
+    ],
+    importpath = "go.nami.run/artifacts-api",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/gdamore/tcell:go_default_library",
+        "//vendor/github.com/gdamore/tcell/encoding:go_default_library",
+        "//vendor/github.com/mattn/go-runewidth:go_default_library",
+    ],
+)

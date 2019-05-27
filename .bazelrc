@@ -1,0 +1,3 @@
+build --javabase=@bazel_tools//tools/jdk:host_jdk
+build --action_env=HOME
+
