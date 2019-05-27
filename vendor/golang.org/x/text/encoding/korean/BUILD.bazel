@@ -6,7 +6,7 @@ go_library(
         "euckr.go",
         "tables.go",
     ],
-    importmap = "go.nami.run/artifacts-api/vendor/golang.org/x/text/encoding/korean",
+    importmap = "github.com/jotamartos/tui/vendor/golang.org/x/text/encoding/korean",
     importpath = "golang.org/x/text/encoding/korean",
     visibility = ["//visibility:public"],
     deps = [

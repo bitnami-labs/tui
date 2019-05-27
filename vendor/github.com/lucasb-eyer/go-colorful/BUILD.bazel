@@ -10,7 +10,7 @@ go_library(
         "soft_palettegen.go",
         "warm_palettegen.go",
     ],
-    importmap = "go.nami.run/artifacts-api/vendor/github.com/lucasb-eyer/go-colorful",
+    importmap = "github.com/jotamartos/tui/vendor/github.com/lucasb-eyer/go-colorful",
     importpath = "github.com/lucasb-eyer/go-colorful",
     visibility = ["//visibility:public"],
 )

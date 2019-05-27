@@ -1,4 +1,4 @@
-# gazelle:prefix go.nami.run/artifacts-api
+# gazelle:prefix github.com/jotamartos/tui
 # gazelle:proto disable_global
 
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
@@ -16,7 +16,7 @@ go_library(
         "print.go",
         "progressbar.go",
     ],
-    importpath = "go.nami.run/artifacts-api",
+    importpath = "github.com/jotamartos/tui",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/github.com/gdamore/tcell:go_default_library",

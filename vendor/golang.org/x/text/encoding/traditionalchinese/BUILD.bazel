@@ -6,7 +6,7 @@ go_library(
         "big5.go",
         "tables.go",
     ],
-    importmap = "go.nami.run/artifacts-api/vendor/golang.org/x/text/encoding/traditionalchinese",
+    importmap = "github.com/jotamartos/tui/vendor/golang.org/x/text/encoding/traditionalchinese",
     importpath = "golang.org/x/text/encoding/traditionalchinese",
     visibility = ["//visibility:public"],
     deps = [

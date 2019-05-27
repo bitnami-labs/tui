@@ -32,7 +32,7 @@ go_library(
         "tscreen_windows.go",
     ],
     cgo = True,
-    importmap = "go.nami.run/artifacts-api/vendor/github.com/gdamore/tcell",
+    importmap = "github.com/jotamartos/tui/vendor/github.com/gdamore/tcell",
     importpath = "github.com/gdamore/tcell",
     visibility = ["//visibility:public"],
     deps = [

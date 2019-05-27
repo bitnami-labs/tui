@@ -11,7 +11,7 @@ go_library(
         "latin5.go",
         "utf8.go",
     ],
-    importmap = "go.nami.run/artifacts-api/vendor/github.com/gdamore/encoding",
+    importmap = "github.com/jotamartos/tui/vendor/github.com/gdamore/encoding",
     importpath = "github.com/gdamore/encoding",
     visibility = ["//visibility:public"],
     deps = [
