@@ -46,6 +46,7 @@ type Option struct {
 	bufferOut   []string
 	PrintOut    bool
 	External    bool
+	Exit    bool
 }
 
 //TODO
@@ -190,10 +191,20 @@ func OSCmdHandler(o *Option, ch chan string) {
 
 //Run commands and waits to complete, then calls menu ShowResult
 func (m *Menu) RunCommand(o *Option) {
-	if o.External {
-    close(m.Wait)
-    return
-	}
+  if o.External {
+    //go m.EventExternalCommandManager()
+    m.Quit()
+    fmt.Fprintf(os.Stdout, "\n----------------------------------------------------------------------------\n")
+    fmt.Fprintf(os.Stdout, "Executing %s...\n\n", o.Cli)
+    runExternalCommand(o.Cli)
+
+    fmt.Fprintf(os.Stdout, "\n----------------------------------------------------------------------------\n")
+    fmt.Println("\nPress the Enter Key to return to the menu")
+    fmt.Scanln() // wait for Enter Key
+    runExternalCommand(os.Args[0])
+    os.Exit(0)
+    //return
+  }
 	if o.Execute == nil {
 		o.Execute = OSCmdHandler
 	}
@@ -288,6 +299,7 @@ func (m *Menu) ShowOption() {
 		}
   } else {
 		m.printPageHeader(o.BreadCrum(*m), o.Description)
+    m.p.BottomBar(m.BackText)
   }
 
   if !hasSubmenu {
@@ -386,6 +398,45 @@ func NewMenu(style *Style) *Menu {
 	}
 }
 
+//Handles key events after running an external commmand
+func runExternalCommand(command string) {
+  externalCommand := strings.Split(command, " ")
+  cmd := exec.Command(externalCommand[0])
+  if len(externalCommand) > 1 {
+    cmd = exec.Command(externalCommand[0], externalCommand[1:]...)
+  }
+  cmd.Stdout = os.Stdout
+  cmd.Stdin = os.Stdin
+  cmd.Stderr = os.Stderr
+  cmd.Run()
+}
+
+//Handles key events for external commnands
+func (menu *Menu) EventExternalCommandManager() {
+	for {
+		ev := menu.p.Screen().PollEvent()
+		o := menu.CurrentOption()
+		switch ev := ev.(type) {
+		case *tcell.EventKey:
+      switch ev.Key() {
+      case tcell.KeyEscape:
+        menu.PrintMenu()
+        go menu.EventManager()
+        return
+      case tcell.KeyEnter:
+        menu.Quit()
+        runExternalCommand(o.Cli)
+        runExternalCommand(os.Args[0])
+        os.Exit(0)
+      case tcell.KeyCtrlL:
+        menu.p.Sync()
+      }
+    case *tcell.EventResize:
+      menu.p.Sync()
+		}
+	}
+}
+
 //Handles key events for commnands
 func (menu *Menu) EventCommandManager() {
 	for {
@@ -421,7 +472,11 @@ func (menu *Menu) EventCommandManager() {
               menu.NextArgument()
             }
           }
-				}
+				} else {
+          menu.PrintMenu()
+          go menu.EventManager()
+          return
+        }
 			case tcell.KeyCtrlL:
 				menu.p.Sync()
 			case tcell.KeyBackspace, tcell.KeyBackspace2:
@@ -474,6 +529,9 @@ func (menu *Menu) EventManager() {
 				return
 			case tcell.KeyEnter:
 				o := menu.CurrentOption()
+        if o.Exit {
+          close(menu.Wait)
+        }
 				if o != nil && o.Disable {
 					continue
 				}
@@ -483,7 +541,7 @@ func (menu *Menu) EventManager() {
 				}
 				menu.argIndex = 0
 				menu.ShowOption()
-        if o.SubOptions == nil || len(o.SubOptions) == 0 {
+        if !o.External && (o.SubOptions == nil || len(o.SubOptions) == 0) {
           go menu.EventCommandManager()
         } 
 				return
