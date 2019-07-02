@@ -1,4 +1,4 @@
-module github.com/jotamartos/tui
+module github.com/bitnami-labs/tui
 
 go 1.12
 

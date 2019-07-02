@@ -61,7 +61,7 @@ go_library(
         "term_xterm_truecolor.go",
         "terminfo.go",
     ],
-    importmap = "github.com/jotamartos/tui/vendor/github.com/gdamore/tcell/terminfo",
+    importmap = "github.com/bitnami-labs/tui/vendor/github.com/gdamore/tcell/terminfo",
     importpath = "github.com/gdamore/tcell/terminfo",
     visibility = ["//visibility:public"],
 )
