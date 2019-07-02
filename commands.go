@@ -191,7 +191,7 @@ func OSCmdHandler(o *Option, ch chan string) {
 //Run commands and waits to complete, then calls menu ShowResult
 func (m *Menu) RunCommand(o *Option) {
 	if o.External {
-    close(menu.Wait)
+    close(m.Wait)
     return
 	}
 	if o.Execute == nil {
